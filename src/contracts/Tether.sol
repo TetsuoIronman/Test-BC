@@ -34,12 +34,17 @@ contract Tether {
         return true;
     }
 
+    // msg.sender = me
+    // spender = dapp
     function approve(address _spender, uint256 _value) public returns (bool success) {
         allowance[msg.sender][_spender] = _value;
         emit Approval(msg.sender, _spender, _value);
         return true;
     }
 
+    // transferFrom is used when someone (es. dapp) has to transfer in behalf of me
+    // msg.sender = dapp
+    // from = me
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
         require(balanceOf[_from] >= _value);
         require(allowance[_from][msg.sender] >= _value);        
